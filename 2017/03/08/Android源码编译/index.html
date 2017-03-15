@@ -87,16 +87,16 @@
 
 
 
-<meta name="description" content="针对Mac OS上，对Android源码下载、编译到最后导入AS进行详细记录分析。">
+<meta name="description" content="针对 Mac OS 上，对 Android 源码下载、编译到最后导入 AS 进行详细记录分析。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android源码编译 for Mac OS">
+<meta property="og:title" content="Android 源码编译 for Mac OS">
 <meta property="og:url" content="http://yoursite.com/2017/03/08/Android源码编译/index.html">
 <meta property="og:site_name" content="迷途小书童">
-<meta property="og:description" content="针对Mac OS上，对Android源码下载、编译到最后导入AS进行详细记录分析。">
-<meta property="og:updated_time" content="2017-03-15T08:26:37.000Z">
+<meta property="og:description" content="针对 Mac OS 上，对 Android 源码下载、编译到最后导入 AS 进行详细记录分析。">
+<meta property="og:updated_time" content="2017-03-15T10:31:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android源码编译 for Mac OS">
-<meta name="twitter:description" content="针对Mac OS上，对Android源码下载、编译到最后导入AS进行详细记录分析。">
+<meta name="twitter:title" content="Android 源码编译 for Mac OS">
+<meta name="twitter:description" content="针对 Mac OS 上，对 Android 源码下载、编译到最后导入 AS 进行详细记录分析。">
 
 
 
@@ -130,7 +130,7 @@
 
 
 
-  <title> Android源码编译 for Mac OS | 迷途小书童 </title>
+  <title> Android 源码编译 for Mac OS | 迷途小书童 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +260,7 @@
             
             
               
-                Android源码编译 for Mac OS
+                Android 源码编译 for Mac OS
               
             
           </h1>
@@ -310,7 +310,7 @@
 
           
               <div class="post-description">
-                  针对Mac OS上，对Android源码下载、编译到最后导入AS进行详细记录分析。
+                  针对 Mac OS 上，对 Android 源码下载、编译到最后导入 AS 进行详细记录分析。
               </div>
           
 
@@ -325,53 +325,54 @@
       
 
       
-        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>下载、编译AOSP真是个很累的事，前前后后、断断续续搞了快1个星期，下载3次，编译n次，遇到各种错误，因此，如果你没有耐性或受不了这种折腾的话，还是放弃吧，避免怀疑自己的智商😂。</p>
-<p>网上可能有很多各种版本的源码编译文章，我最初也是参照其中的一篇博客来进行，但过程中遇到各种坑，有解决方法的，也有搜不到答案的。最后我还是根据Google官方指导，一步一步严格根据顺序来执行，最后成功完成了下载编译和导入。所以建议英文能力还不错的同学，还是根据官方的指导来进行。</p>
+        <h2 id="前言："><a href="#前言：" class="headerlink" title="前言："></a>前言：</h2><p>下载、编译 AOSP 真是个很累的事，前前后后、断断续续搞了快 1 个星期，下载 3 次，编译 n 次，遇到各种错误，因此，如果你没有耐性或受不了这种折腾的话，还是放弃吧，避免怀疑自己的智商😂。</p>
+<p>网上可能有很多各种版本的源码编译文章，我最初也是参照其中的一篇博客来进行，但过程中遇到各种坑，有解决方法的，也有搜不到答案的。最后我还是根据 Google 官方指导，一步一步严格根据顺序来执行，最后成功完成了下载编译和导入。所以建议英文能力还不错的同学，还是根据官方的指导来进行。</p>
 <p>希望能帮到有需要的同学，然后祝大家一次搞定！</p>
-<h2 id="下载前准备"><a href="#下载前准备" class="headerlink" title="下载前准备"></a>下载前准备</h2><h3 id="创建一个大小写敏感的磁盘分区"><a href="#创建一个大小写敏感的磁盘分区" class="headerlink" title="创建一个大小写敏感的磁盘分区"></a>创建一个大小写敏感的磁盘分区</h3><p>首先需要创建一个大小写敏感的磁盘分区，建议分区大小为80G（下载源码+编译成功≈78G）。创建分区命令如下：</p>
+<h2 id="下载前准备"><a href="#下载前准备" class="headerlink" title="下载前准备"></a>下载前准备</h2><h3 id="创建一个大小写敏感的磁盘分区"><a href="#创建一个大小写敏感的磁盘分区" class="headerlink" title="创建一个大小写敏感的磁盘分区"></a>创建一个大小写敏感的磁盘分区</h3><p>首先需要创建一个大小写敏感的磁盘分区，建议分区大小为 80 G（下载源码 + 编译成功 ≈ 78 G）。创建分区命令如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hdiutil create -type SPARSE -fs <span class="string">'Case-sensitive Journaled HFS+'</span> -size 40g ~/android.dmg</div></pre></td></tr></table></figure>
-<p>这时会生成一个后缀为<font color="red"><strong>.dmg</strong></font>(或<font color="red"><strong>.dmg.sparseimage</strong></font>)的文件（磁盘镜像）。</p>
+<p>这时会生成一个后缀为 <font color="red"><strong>.dmg</strong></font> (或 <font color="red"><strong>.dmg.sparseimage</strong></font> )的文件（磁盘镜像）。</p>
 <p>若创建分区后需要对分区进行扩容，则可使用以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hdiutil resize -size &lt;new-size-you-want&gt;g ~/android.dmg.sparseimage</div></pre></td></tr></table></figure>
-<h3 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h3><p>根据需要的目标源码版本，安装<a href="http://source.android.com/source/requirements.html#jdk" target="_blank" rel="external">合适的JDK版本</a></p>
+<h3 id="安装-JDK"><a href="#安装-JDK" class="headerlink" title="安装 JDK"></a>安装 JDK</h3><p>根据需要的目标源码版本，安装<a href="http://source.android.com/source/requirements.html#jdk" target="_blank" rel="external">合适的 JDK 版本</a></p>
 <h3 id="安装其他必备软件"><a href="#安装其他必备软件" class="headerlink" title="安装其他必备软件"></a>安装其他必备软件</h3><ol>
 <li><p>Xcode Commend Line</p>
-<p>需要先安装Xcode。如果已经安装Xcode，则直接执行以下命令：</p>
+<p>需要先安装 Xcode。如果已经安装 Xcode，则直接执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ xcode-select --install</div></pre></td></tr></table></figure>
 </li>
-<li><p>安装<a href="https://www.macports.org/install.php" target="_blank" rel="external">MacPorts</a></p>
-<p>安装完MacPorts之后，在<code>~/.bash_profile</code>中加上下面这一行：<br><code>export PATH=/opt/local/bin:$PATH</code></p>
+<li><p>安装 <a href="https://www.macports.org/install.php" target="_blank" rel="external">MacPorts</a></p>
+<p>安装完 MacPorts 之后，在<code>~/.bash_profile</code>中加上下面这一行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">export</span> PATH=/opt/<span class="built_in">local</span>/bin:<span class="variable">$PATH</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>安装其他软件</p>
-<p>通过MacPorts安装git、make、GPG：</p>
+<p>通过 MacPorts 安装 git、make、GPG：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg</div></pre></td></tr></table></figure>
 </li>
-<li><p>设置文件描述符限制<br>在Mac OS的默认设置中，同时打开文件的并发数过低(默认好像是1024)，不能满足编译时高并发的需求，因此我们需要取消这个限制，在<code>.bash_profile</code>中增加下面代码：</p>
+<li><p>设置文件描述符限制<br>在 Mac OS 的默认设置中，同时打开文件的并发数过低(默认好像是 1024 )，不能满足编译时高并发的需求，因此我们需要取消这个限制，在<code>.bash_profile</code>中增加下面代码：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># set the number of open files to be 1024</span></div><div class="line"><span class="built_in">ulimit</span> -S -n 1024</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><h3 id="安装repo"><a href="#安装repo" class="headerlink" title="安装repo"></a>安装repo</h3><ol>
+<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><h3 id="安装-repo"><a href="#安装-repo" class="headerlink" title="安装 repo"></a>安装 repo</h3><ol>
 <li><p>创建目录并加入到<code>$PATH</code>中</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mkdir ~/bin</div><div class="line">$ PATH=~/bin:<span class="variable">$PATH</span></div></pre></td></tr></table></figure>
 </li>
-<li><p>下载repo</p>
+<li><p>下载 repo</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ curl https://storage.googleapis.com/git-repo-downloads/repo &gt; ~/bin/repo</div></pre></td></tr></table></figure>
 </li>
-<li><p>让repo可执行</p>
+<li><p>让 repo 可执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ chmod a+x ~/bin/repo</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="初始化repo"><a href="#初始化repo" class="headerlink" title="初始化repo"></a>初始化repo</h3><ol>
+<h3 id="初始化-repo"><a href="#初始化-repo" class="headerlink" title="初始化 repo"></a>初始化 repo</h3><ol>
 <li><p>创建一个空文件夹(用于存放源码)，该文件夹必须在<a href="#创建一个大小写敏感的磁盘分区">大小写敏感的磁盘分区</a>中</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mkdir your_dir</div><div class="line">$ <span class="built_in">cd</span> your_dir</div></pre></td></tr></table></figure>
 </li>
-<li><p>初始化repo<br>进入上面所创建用来保存源码的目录后，执行以下命令：</p>
+<li><p>初始化 repo<br>进入上面所创建用来保存源码的目录后，执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ repo init -u https://android.googlesource.com/platform/manifest</div></pre></td></tr></table></figure>
-<p>这是下载master分支的源码，如果需要下载<a href="http://source.android.com/source/build-numbers.html#source-code-tags-and-builds" target="_blank" rel="external">特定版本或分支</a>的话，如下：</p>
+<p>这是下载 master 分支的源码，如果需要下载<a href="http://source.android.com/source/build-numbers.html#source-code-tags-and-builds" target="_blank" rel="external">特定版本或分支</a>的话，如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ repo init -u https://android.googlesource.com/platform/manifest -b android-4.0.1_r1</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h3 id="下载源码-1"><a href="#下载源码-1" class="headerlink" title="下载源码"></a>下载源码</h3><p>  执行下面的命令，开始漫长的等待吧~(顺利的话，大约5个小时)<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ repo sync</div></pre></td></tr></table></figure></p>
+<h3 id="下载源码-1"><a href="#下载源码-1" class="headerlink" title="下载源码"></a>下载源码</h3><p>  执行下面的命令，开始漫长的等待吧~(顺利的话，大约 5 个小时)<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ repo sync</div></pre></td></tr></table></figure></p>
 <h2 id="编译源码"><a href="#编译源码" class="headerlink" title="编译源码"></a>编译源码</h2><p>  经过漫长的等待，终于完成了源码下载。如果担心遗漏，可以多<code>repo sync</code>几次，不然一旦有遗漏，编译将会是一个蛋碎的过程😂。</p>
 <p>  下面我们开始编译源码了。</p>
 <h3 id="下载专有二进制文件"><a href="#下载专有二进制文件" class="headerlink" title="下载专有二进制文件"></a>下载专有二进制文件</h3><p>  首先一定要去下载专有的<a href="https://source.android.com/source/building.html#obtaining-proprietary-binaries" target="_blank" rel="external">二进制文件</a>，找到你想要下在的设备，进行下载。</p>
@@ -379,7 +380,7 @@
 <h3 id="清理现场"><a href="#清理现场" class="headerlink" title="清理现场"></a>清理现场</h3><p>  为确保二进制文件被正确提取，可执行以下命令来删除之前的一些编译输出(如果存在的话)<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ make clobber</div></pre></td></tr></table></figure></p>
 <h3 id="设置编译环境"><a href="#设置编译环境" class="headerlink" title="设置编译环境"></a>设置编译环境</h3><p>  通过运行以下脚本来初始化编译环境<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">source</span> build/envsetup.sh</div></pre></td></tr></table></figure></p>
 <p>  或者<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ . build/envsetup.sh</div></pre></td></tr></table></figure></p>
-<h3 id="选择编译target"><a href="#选择编译target" class="headerlink" title="选择编译target"></a>选择编译target</h3><p>  输入<code>lunch</code>来查看可选target，并选择你所需要编译的target来执行，例如：<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ lunch aosp_arm-eng</div></pre></td></tr></table></figure></p>
+<h3 id="选择编译target"><a href="#选择编译target" class="headerlink" title="选择编译target"></a>选择编译target</h3><p>  输入 <code>lunch</code> 来查看可选 target，并选择你所需要编译的 target 来执行，例如：<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ lunch aosp_arm-eng</div></pre></td></tr></table></figure></p>
 <p>  根据target的后缀，可以分为以下几种类型：</p>
 <table>
 <thead>
@@ -395,7 +396,7 @@
 </tr>
 <tr>
 <td style="text-align:left">userdebug</td>
-<td style="text-align:left">类似”user”, 但是具有root权限, debug的首选</td>
+<td style="text-align:left">类似”user”, 但是具有 root 权限, debug 的首选</td>
 </tr>
 <tr>
 <td style="text-align:left">eng</td>
@@ -404,33 +405,33 @@
 </tbody>
 </table>
 <h3 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h3><p>  上述一切都准备好后，便可以开始进行编译(又是漫长等待😑)。<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ make -jN</div></pre></td></tr></table></figure></p>
-<p>  其中N表示线程数(N=CPU的核心数×2)。</p>
+<p>  其中N表示线程数( N = CPU 的核心数 × 2 )。</p>
 <p>  编译过程中可能会出错，具体的错误和解决办法可参考<a href="#问题收集">问题收集</a>。</p>
-<h2 id="导入Android-Studio"><a href="#导入Android-Studio" class="headerlink" title="导入Android Studio"></a>导入Android Studio</h2><h3 id="编译idegen模块"><a href="#编译idegen模块" class="headerlink" title="编译idegen模块"></a>编译idegen模块</h3><p>  输入以下命令进行编译：<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mmm development/tools/idegen/</div></pre></td></tr></table></figure></p>
+<h2 id="导入-Android-Studio"><a href="#导入-Android-Studio" class="headerlink" title="导入 Android Studio"></a>导入 Android Studio</h2><h3 id="编译-idegen-模块"><a href="#编译-idegen-模块" class="headerlink" title="编译 idegen 模块"></a>编译 idegen 模块</h3><p>  输入以下命令进行编译：<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mmm development/tools/idegen/</div></pre></td></tr></table></figure></p>
 <p>  编译成功后，会有以下提示<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#### make completed successfully (27 seconds) ####</div></pre></td></tr></table></figure></p>
-<p>  然后继续运行以下的命令生成android.ipr和android.iml<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sh development/tools/idegen/idegen.sh</div></pre></td></tr></table></figure></p>
-<p>  编译成功后，在源码的根目录下则会生成android.ipr和android.iml两个文件。</p>
-<h3 id="导入AS"><a href="#导入AS" class="headerlink" title="导入AS"></a>导入AS</h3><p>  打开Android Studio，打开源码根目录的android.ipr(等吧，大概20分钟左右，视乎电脑配置)。</p>
+<p>  然后继续运行以下的命令生成 android.ipr 和 android.iml<br>  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sh development/tools/idegen/idegen.sh</div></pre></td></tr></table></figure></p>
+<p>  编译成功后，在源码的根目录下则会生成 android.ipr 和 android.iml 两个文件。</p>
+<h3 id="导入-AS"><a href="#导入-AS" class="headerlink" title="导入 AS"></a>导入 AS</h3><p>  打开 Android Studio，打开源码根目录的 android.ipr (等吧，大概 20 分钟左右，视乎电脑配置)。</p>
 <p>  最后，终于，导进来了！进来了！来了！👏👏👏(太累了😴)</p>
 <h2 id="问题收集"><a href="#问题收集" class="headerlink" title="问题收集"></a>问题收集</h2><ol>
 <li><p>Port gmake not found</p>
-<p>在运行通过MacPorts<a href="#安装其他必备软件">安装其他软件</a>时，可能出现上述错误，解决办法，可先执行以下命令：</p>
+<p>在运行通过 MacPorts <a href="#安装其他必备软件">安装其他软件</a>时，可能出现上述错误，解决办法，可先执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo port <span class="_">-d</span> sync</div></pre></td></tr></table></figure>
-<p>再重新执行下面命令就OK了</p>
+<p>再重新执行下面命令就 OK 了</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ POSIXLY_CORRECT=1 sudo port install gmake libsdl git gnupg</div></pre></td></tr></table></figure>
 </li>
 <li><p>repo: command not found</p>
-<p>在初始化repo(repo init)时，可能会出现上述错误，解决办法，先执行以下两个命令</p>
+<p>在初始化 repo (repo init)时，可能会出现上述错误，解决办法，先执行以下两个命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">echo</span> <span class="string">'export PATH=$PATH:~/bin'</span> &gt;&gt; ~/.bashrc</div><div class="line">$ <span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:~/bin</div></pre></td></tr></table></figure>
 <p>然后重新执行命令即可</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ repo init -u https://android.googlesource.com/platform/manifest</div></pre></td></tr></table></figure>
 </li>
 <li><p>Out of memory error……Try increasing heap size with java option ‘-Xmx’.</p>
-<p>在编译过程中，可能会出现上面的错误，解决办法，先执行下面的命令，再重新<code>make -jN</code>。</p>
+<p>在编译过程中，可能会出现上面的错误，解决办法，先执行下面的命令，再重新 <code>make -jN</code>。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">export</span> JVM_ARGS=<span class="string">"-Xmx4096m -XX:MaxPermSize=1024m"</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>mmm: command not found</p>
-<p>在编译idegen模块的时候，可能会出现以上错误，解决办法，在源码目录重新执行以下命令即可。</p>
+<p>在编译 idegen 模块的时候，可能会出现以上错误，解决办法，在源码目录重新执行以下命令即可。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">source</span> build/envsetup.sh</div></pre></td></tr></table></figure>
 </li>
 <li><p>其他错误，可参考<a href="https://android.googlesource.com/platform/prebuilts/sdk/+/master/tools/README-jack-server.md#Troubleshooting" target="_blank" rel="external">Jack TroubleShooting</a>或者请自行google之(整个过程可能出现的问题太多了，无法一一囊括)</p>
@@ -505,7 +506,7 @@
     <div class="post-spread">
       
         <div class="ds-share flat" data-thread-key="2017/03/08/Android源码编译/"
-     data-title="Android源码编译 for Mac OS"
+     data-title="Android 源码编译 for Mac OS"
      data-content=""
      data-url="http://yoursite.com/2017/03/08/Android源码编译/">
   <div class="ds-share-inline">
@@ -535,7 +536,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2017/03/08/Android源码编译/"
-           data-title="Android源码编译 for Mac OS" data-url="http://yoursite.com/2017/03/08/Android源码编译/">
+           data-title="Android 源码编译 for Mac OS" data-url="http://yoursite.com/2017/03/08/Android源码编译/">
       </div>
     
   </div>
@@ -630,7 +631,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载前准备"><span class="nav-number">2.</span> <span class="nav-text">下载前准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个大小写敏感的磁盘分区"><span class="nav-number">2.1.</span> <span class="nav-text">创建一个大小写敏感的磁盘分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装JDK"><span class="nav-number">2.2.</span> <span class="nav-text">安装JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装其他必备软件"><span class="nav-number">2.3.</span> <span class="nav-text">安装其他必备软件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载源码"><span class="nav-number">3.</span> <span class="nav-text">下载源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装repo"><span class="nav-number">3.1.</span> <span class="nav-text">安装repo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化repo"><span class="nav-number">3.2.</span> <span class="nav-text">初始化repo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载源码-1"><span class="nav-number">3.3.</span> <span class="nav-text">下载源码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译源码"><span class="nav-number">4.</span> <span class="nav-text">编译源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载专有二进制文件"><span class="nav-number">4.1.</span> <span class="nav-text">下载专有二进制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取二进制文件"><span class="nav-number">4.2.</span> <span class="nav-text">提取二进制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清理现场"><span class="nav-number">4.3.</span> <span class="nav-text">清理现场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置编译环境"><span class="nav-number">4.4.</span> <span class="nav-text">设置编译环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择编译target"><span class="nav-number">4.5.</span> <span class="nav-text">选择编译target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始编译"><span class="nav-number">4.6.</span> <span class="nav-text">开始编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入Android-Studio"><span class="nav-number">5.</span> <span class="nav-text">导入Android Studio</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译idegen模块"><span class="nav-number">5.1.</span> <span class="nav-text">编译idegen模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入AS"><span class="nav-number">5.2.</span> <span class="nav-text">导入AS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题收集"><span class="nav-number">6.</span> <span class="nav-text">问题收集</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言："><span class="nav-number">1.</span> <span class="nav-text">前言：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载前准备"><span class="nav-number">2.</span> <span class="nav-text">下载前准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个大小写敏感的磁盘分区"><span class="nav-number">2.1.</span> <span class="nav-text">创建一个大小写敏感的磁盘分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-JDK"><span class="nav-number">2.2.</span> <span class="nav-text">安装 JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装其他必备软件"><span class="nav-number">2.3.</span> <span class="nav-text">安装其他必备软件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载源码"><span class="nav-number">3.</span> <span class="nav-text">下载源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-repo"><span class="nav-number">3.1.</span> <span class="nav-text">安装 repo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化-repo"><span class="nav-number">3.2.</span> <span class="nav-text">初始化 repo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载源码-1"><span class="nav-number">3.3.</span> <span class="nav-text">下载源码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译源码"><span class="nav-number">4.</span> <span class="nav-text">编译源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载专有二进制文件"><span class="nav-number">4.1.</span> <span class="nav-text">下载专有二进制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提取二进制文件"><span class="nav-number">4.2.</span> <span class="nav-text">提取二进制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清理现场"><span class="nav-number">4.3.</span> <span class="nav-text">清理现场</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置编译环境"><span class="nav-number">4.4.</span> <span class="nav-text">设置编译环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择编译target"><span class="nav-number">4.5.</span> <span class="nav-text">选择编译target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始编译"><span class="nav-number">4.6.</span> <span class="nav-text">开始编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入-Android-Studio"><span class="nav-number">5.</span> <span class="nav-text">导入 Android Studio</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译-idegen-模块"><span class="nav-number">5.1.</span> <span class="nav-text">编译 idegen 模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入-AS"><span class="nav-number">5.2.</span> <span class="nav-text">导入 AS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题收集"><span class="nav-number">6.</span> <span class="nav-text">问题收集</span></a></li></ol></div>
             
 
           </div>
